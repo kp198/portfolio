@@ -12,13 +12,13 @@
       --muted: #6b7280;
       --accent: #4f46e5;
       --border: #e5e7eb;
-      --status-color: #111827; /* dark icons for light mode */
+      --status-color: #111827; 
     }
 
-    /* Dark mode only affects phone screen */
-    /* Dark mode – subtle iOS-style */
-    /* Dark mode – subtle iOS-style */
-    /* Dark mode – tuned iOS palette */
+    
+    
+    
+    
     .screen.dark {
       --bg: #0a0d14;
       --card: #0f172a;
@@ -26,7 +26,7 @@
       --muted: #c7d2fe;
       --accent: #818cf8;
       --border: #1e293b;
-      --status-color: #ffffff; /* light icons for dark mode */
+      --status-color: #ffffff; 
     }
 
     * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
@@ -41,7 +41,7 @@
       color: var(--text);
     }
 
-    /* Phone shell */
+    
     .phone {
       width: 360px;
       height: 740px;
@@ -62,13 +62,13 @@
       border-radius: 32px;
       overflow: hidden;
       position: relative;
-      padding-top: 44px; /* safe area below notch */
+      padding-top: 44px; 
       display: flex;
       flex-direction: column;
     }
 
-    /* Notch */
-    /* Notch */
+    
+    
     .notch {
       position: absolute;
       top: 0;
@@ -83,12 +83,12 @@
     }
 
     .screen.dark .notch {
-      background: #020617; /* visible against dark UI */
+      background: #020617; 
     }
 
-    /* Status bar hint */
-    /* iOS-like status bar */
-    /* iOS-like status bar */
+    
+    
+    
     .status {
       position: absolute;
       top: 6px;
@@ -132,7 +132,7 @@
     }
 
     .toggle {
-      font-size: 20px;
+      font-size: 20px; 
       cursor: pointer;
       color: var(--muted);
       line-height: 1;
@@ -144,7 +144,7 @@
     }
 
     .toggle:active {
-      transform: scale(1.25);
+      transform: scale(1.25); 
     }
 
     .toggle:hover {
@@ -235,9 +235,9 @@
       flex: 1;
       padding: 6px 0;
       border-radius: 8px;
-      border: 1px solid var(--border); /* explicit segmented control border */
+      border: 1px solid var(--border); 
       background: var(--card);
-      color: var(--muted); /* non-selected text muted, not black */
+      color: var(--muted); 
       font-size: 13px;
       cursor: pointer;
       transition: background 0.25s ease, transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, color 0.2s ease;
@@ -254,7 +254,7 @@
 
     .company.active {
       background: var(--accent);
-      color: #ffffff;
+      color: #ffffff; 
       border-color: var(--accent);
     }
 
@@ -275,7 +275,7 @@
       background: var(--card);
       position: sticky;
       bottom: 0;
-      padding-bottom: 6px; /* home indicator space */
+      padding-bottom: 6px; 
     }
 
     .tab {
@@ -310,6 +310,33 @@
     }
 
     a { color: var(--accent); text-decoration: none; }
+
+    .play-link {
+      position: relative;
+      font-weight: 500;
+    }
+
+    .play-nudge {
+      font-size: 12px;
+      color: var(--accent);
+      margin-left: 8px;
+      opacity: 1; 
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 500;
+      animation: demoPulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes demoPulse {
+      0% { opacity: 0.6; }
+      50% { opacity: 1; }
+      100% { opacity: 0.6; }
+    }
+
+    li:hover .play-nudge {
+      transform: translateX(2px);
+    }
   </style>
 </head>
 <body>
@@ -333,7 +360,7 @@
     </div>
 
     <div class="content">
-      <!-- Home -->
+      
       <section id="home" class="active">
         <h2>About</h2>
         <p>
@@ -341,23 +368,14 @@
           I enjoy working at the intersection of technology, design, and user experience.
         </p>
 
-        <h2>Work</h2>
-        <div class="companies">
-          <button onclick="showCompany('deliveroo', this)" class="company active">Deliveroo</button>
-          <button onclick="showCompany('flipkart', this)" class="company">Flipkart</button>
-          <button onclick="showCompany('zoho', this)" class="company">Zoho</button>
-        </div>
+        <h2>Career Highlights</h2>
+        <ul>
+          <li>iOS engineer with experience shipping features at scale across food-tech and e‑commerce.</li>
+          <li>Strong focus on usability, performance, and collaboration with product & design.</li>
+          <li>Experience owning features end‑to‑end, from requirements to release.</li>
+        </ul>
 
-        <div id="deliveroo" class="company-content active">
-          <p><strong>Deliveroo</strong> — Working on rider-facing iOS features, accessibility, and UX-driven improvements.</p>
-        </div>
-        <div id="flipkart" class="company-content">
-          <p><strong>Flipkart</strong> — Led multiple feature launches improving conversion, engagement, and app stability.</p>
-        </div>
-        <div id="zoho" class="company-content">
-          <p><strong>Zoho</strong> — Built core iOS features and contributed to large-scale product migrations.</p>
-        </div>
-
+        <h2>Skills</h2>
         <div>
           <span class="tag">Swift</span>
           <span class="tag">SwiftUI</span>
@@ -366,24 +384,59 @@
         </div>
       </section>
 
-      <!-- CV -->
+      
       <section id="cv">
-        <h2 class="cv-title">Career Highlights</h2>
-        <ul>
-          <li><strong>Deliveroo</strong> — iOS Engineer working on rider-facing features and UX improvements.</li>
-          <li><strong>Flipkart</strong> — Led and shipped multiple high-impact features, improving engagement and stability.</li>
-          <li><strong>Zoho</strong> — Built core iOS features and contributed to large-scale app migrations.</li>
-        </ul>
-        <p>
-          My background spans feature development, system improvements, and close collaboration with
-          product teams to define and execute ideas end-to-end.
-        </p>
-        <p>
+        <h2 class="cv-title">Work Experience</h2>
+
+        <div class="companies">
+          <button onclick="showCompany('deliveroo-work', this)" class="company active">Deliveroo</button>
+          <button onclick="showCompany('flipkart-work', this)" class="company">Flipkart</button>
+          <button onclick="showCompany('zoho-work', this)" class="company">Zoho</button>
+        </div>
+
+        <div id="deliveroo-work" class="company-content active">
+          <h3>Deliveroo</h3>
+          <ul>
+            <li>Worked on rider-facing iOS features using Swift, SwiftUI, and UIKit.</li>
+            <li>Collaborated with Product and Design to refine PRDs.</li>
+            <li>Shipped the Rider Inbox feature.</li>
+            <li>Led development of delivery notes translation.</li>
+            <li>Redesigned the force-upgrade flow.</li>
+            <li>Contributed to overall app stability and UX improvements.</li>
+          </ul>
+        </div>
+
+        <div id="flipkart-work" class="company-content">
+          <h3>Flipkart</h3>
+          <ul>
+            <li><a class="play-link" href="./PLAY_FK.mp4" target="_blank">Led the end-to-end development and launch of the Play page</a><span class="play-nudge">▶ Watch demo</span></li>
+            <li>Conducted competitor analysis and user behavior analysis.</li>
+            <li>Worked with Product, Design, and Leadership to define MVP scope.</li>
+            <li>Co-authored and drove a PRD for an internal on-call efficiency tool.</li>
+            <li>Collaborated on the DIFM feature.</li>
+            <li>Owned performance fixes and crash reduction efforts.</li>
+            <li>Built and owned a Fastify service for serving configuration files.</li>
+          </ul>
+        </div>
+
+        <div id="zoho-work" class="company-content">
+          <h3>Zoho</h3>
+          <ul>
+            <li>Developed core iOS features for Zoho Sheet.</li>
+            <li>Independently ideated and shipped the “Pin Sheets to Top” feature.</li>
+            <li>Implemented push notifications in the iOS app.</li>
+            <li>Contributed to UI revamps across multiple screens.</li>
+            <li>Led the migration from Zoho Docs to WorkDrive.</li>
+            <li>Established a CI/CD pipeline for the iOS repository.</li>
+          </ul>
+        </div>
+
+        <p style="margin-top:12px;">
           <a href="./keerthika_cv.pdf" target="_blank">View full CV (PDF)</a>
         </p>
       </section>
 
-      <!-- Contact -->
+      
       <section id="contact">
         <h2 class="contact-title">Let’s Connect</h2>
         <p class="contact-intro">If you’d like to talk about iOS, product engineering, or collaboration, I’d love to hear from you.</p>

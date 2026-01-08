@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Keerthika Priya Ganesh</title>
+  <link rel="icon" type="image/png" href="./apple-dev-icon.png">
+  <link rel="apple-touch-icon" href="./apple-dev-icon.png">
   <style>
     :root {
       --bg: #f5f7fb;
@@ -14,9 +16,6 @@
       --border: #e5e7eb;
       --status-color: #111827; 
     }
-
-    
-    
     
     
     .screen.dark {
@@ -173,6 +172,33 @@
     }
 
     section { display: none; }
+    
+    .animate-in {
+      animation-duration: 0.6s;
+      animation-fill-mode: both;
+      animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @keyframes fromLeft {
+      from { opacity: 0; transform: translateX(-16px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes fromRight {
+      from { opacity: 0; transform: translateX(16px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes fromTop {
+      from { opacity: 0; transform: translateY(-16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes bounceUp {
+      0% { opacity: 0; transform: translateY(12px); }
+      60% { opacity: 1; transform: translateY(-4px); }
+      100% { transform: translateY(0); }
+    }
     section.active { display: block; }
 
     h2 {
@@ -461,12 +487,46 @@
       </div>
 
   <script>
+    const animations = ['fromLeft', 'fromRight', 'fromTop', 'bounceUp'];
+    let currentPageAnimation = animations[0];
+
+    function pickPageAnimation() {
+      currentPageAnimation = animations[Math.floor(Math.random() * animations.length)];
+    }
+
+    function applyPageAnimation(container) {
+      const elements = container.querySelectorAll('h2, h3, p, li, .tag');
+      elements.forEach((el, index) => {
+        el.classList.remove('animate-in');
+        el.style.animationName = 'none';
+        void el.offsetWidth; // force reflow
+        el.classList.add('animate-in');
+        el.style.animationName = currentPageAnimation;
+        el.style.animationDelay = `${index * 0.04}s`;
+      });
+    }
+
     function showTab(id, el) {
       document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
+      const section = document.getElementById(id);
+      section.classList.add('active');
 
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
       el.classList.add('active');
+
+      pickPageAnimation();
+      applyPageAnimation(section);
+    }
+
+    function showCompany(id, el) {
+      document.querySelectorAll('.company-content').forEach(c => c.classList.remove('active'));
+      const content = document.getElementById(id);
+      content.classList.add('active');
+
+      document.querySelectorAll('.company').forEach(b => b.classList.remove('active'));
+      el.classList.add('active');
+
+      applyPageAnimation(content);
     }
 
     function toggleTheme() {
@@ -474,14 +534,6 @@
       const toggle = document.querySelector('.toggle');
       const isDark = screen.classList.toggle('dark');
       toggle.textContent = isDark ? '☾' : '☀︎';
-    }
-
-    function showCompany(id, el) {
-      document.querySelectorAll('.company-content').forEach(c => c.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-
-      document.querySelectorAll('.company').forEach(b => b.classList.remove('active'));
-      el.classList.add('active');
     }
   </script>
 </body>

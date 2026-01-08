@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Keerthika Priya Ganesh</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --accent: #4f46e5;
+      --border: #e5e7eb;
+    }
+
+    /* Dark mode only affects phone screen */
+    /* Dark mode – subtle iOS-style */
+    /* Dark mode – subtle iOS-style */
+    .screen.dark {
+      --bg: #0a0d14;
+      --card: #0f172a;
+      --text: #f1f5f9;      /* brighter for headings & name */
+      --muted: #a5b4fc;     /* softer but readable */
+      --accent: #7c83ff;
+      --border: #1e293b;
+    }
+
+    * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      color: var(--text);
+    }
+
+    /* Phone shell */
+    .phone {
+      width: 360px;
+      height: 740px;
+      background: #000;
+      border-radius: 44px;
+      box-shadow:
+        0 40px 80px rgba(0,0,0,0.35),
+        inset 0 0 0 2px #111;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      padding: 12px;
+    }
+
+    .screen {
+      flex: 1;
+      background: var(--card);
+      border-radius: 32px;
+      overflow: hidden;
+      position: relative;
+      padding-top: 44px; /* safe area below notch */
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Notch */
+    .notch {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 160px;
+      height: 34px;
+      background: #000;
+      border-bottom-left-radius: 18px;
+      border-bottom-right-radius: 18px;
+      z-index: 10;
+    }
+
+    /* Status bar hint */
+    /* iOS-like status bar */
+    .status {
+      position: absolute;
+      top: 6px;
+      left: 0;
+      right: 0;
+      padding: 0 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      color: #ffffff;
+      z-index: 6;
+      pointer-events: none;
+    }
+
+    .status .right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .status svg {
+      width: 16px;
+      height: 16px;
+      fill: #ffffff;
+    }
+
+    .header {
+      padding: 18px 16px 14px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.04), transparent);
+    }
+
+    .screen.dark .header {
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .toggle {
+      font-size: 12px;
+      cursor: pointer;
+      color: var(--muted);
+    }
+
+    .header h1 {
+      font-size: 18px;
+      margin: 0;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .header p {
+      margin: 4px 0 0;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .content {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+    }
+
+    section { display: none; }
+    section.active { display: block; }
+
+    h2 {
+      font-size: 16px;
+      margin-bottom: 8px;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .cv-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .contact-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .contact-intro {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    p {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text);
+    }
+
+    ul {
+      padding-left: 18px;
+      font-size: 14px;
+    }
+
+    li { margin-bottom: 6px; }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 8px;
+      margin: 4px 4px 0 0;
+      font-size: 12px;
+      background: #eef2ff;
+      color: var(--accent);
+      border-radius: 999px;
+    }
+
+    .companies {
+      display: flex;
+      gap: 8px;
+      margin: 8px 0 12px;
+    }
+
+    .company {
+      flex: 1;
+      padding: 6px 0;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .company.active {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    .company-content { display: none; }
+    .company-content.active { display: block; }
+
+    .footer {
+      display: flex;
+      border-top: 1px solid var(--border);
+      background: var(--card);
+      position: sticky;
+      bottom: 0;
+      padding-bottom: 6px; /* home indicator space */
+    }
+
+    .tab {
+      flex: 1;
+      padding: 8px 0 10px;
+      text-align: center;
+      font-size: 11px;
+      cursor: pointer;
+      color: var(--muted);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .tab .icon {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+      opacity: 0.9;
+    }
+
+    .tab.active {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="phone">
+    <div class="screen">
+      <div class="notch"></div>
+      <div class="status">
+        <span>9:41</span>
+        <div class="right">
+          <svg viewBox="0 0 24 24"><path d="M1 18h2v-6H1v6zm4 0h2v-9H5v9zm4 0h2V6H9v12zm4 0h2V3h-2v15z"/></svg>
+          
+          <svg viewBox="0 0 24 24"><path d="M16 4h-8a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"/></svg>
+        </div>
+      </div>
+    <div class="header">
+      <div>
+        <h1>Keerthika Priya Ganesh</h1>
+        <p>Software Engineer · Product-minded iOS Developer</p>
+      </div>
+      <div class="toggle" onclick="toggleTheme()" title="Toggle dark mode">☾</div>
+    </div>
+
+    <div class="content">
+      <!-- Home -->
+      <section id="home" class="active">
+        <h2>About</h2>
+        <p>
+          I am a software engineer with experience across iOS development and product-focused engineering.
+          I enjoy working at the intersection of technology, design, and user experience.
+        </p>
+
+        <h2>Work</h2>
+        <div class="companies">
+          <button onclick="showCompany('deliveroo', this)" class="company active">Deliveroo</button>
+          <button onclick="showCompany('flipkart', this)" class="company">Flipkart</button>
+          <button onclick="showCompany('zoho', this)" class="company">Zoho</button>
+        </div>
+
+        <div id="deliveroo" class="company-content active">
+          <p><strong>Deliveroo</strong> — Working on rider-facing iOS features, accessibility, and UX-driven improvements.</p>
+        </div>
+        <div id="flipkart" class="company-content">
+          <p><strong>Flipkart</strong> — Led multiple feature launches improving conversion, engagement, and app stability.</p>
+        </div>
+        <div id="zoho" class="company-content">
+          <p><strong>Zoho</strong> — Built core iOS features and contributed to large-scale product migrations.</p>
+        </div>
+
+        <div>
+          <span class="tag">Swift</span>
+          <span class="tag">SwiftUI</span>
+          <span class="tag">UIKit</span>
+          <span class="tag">Product Thinking</span>
+        </div>
+      </section>
+
+      <!-- CV -->
+      <section id="cv">
+        <h2 class="cv-title">Career Highlights</h2>
+        <ul>
+          <li><strong>Deliveroo</strong> — iOS Engineer working on rider-facing features and UX improvements.</li>
+          <li><strong>Flipkart</strong> — Led and shipped multiple high-impact features, improving engagement and stability.</li>
+          <li><strong>Zoho</strong> — Built core iOS features and contributed to large-scale app migrations.</li>
+        </ul>
+        <p>
+          My background spans feature development, system improvements, and close collaboration with
+          product teams to define and execute ideas end-to-end.
+        </p>
+        <p>
+          <a href="Keerthika_CV_PM.pdf" target="_blank">View full CV (PDF)</a>
+        </p>
+      </section>
+
+      <!-- Contact -->
+      <section id="contact">
+        <h2 class="contact-title">Let’s Connect</h2>
+        <p class="contact-intro">If you’d like to talk about iOS, product engineering, or collaboration, I’d love to hear from you.</p>
+        <p>Email: <a href="mailto:gkp1998@gmail.com">gkp1998@gmail.com</a></p>
+        <p>LinkedIn: <a href="https://linkedin.com/in/keerthikapriya" target="_blank">linkedin.com/in/keerthikapriya</a></p>
+      </section>
+    </div>
+
+      <div class="footer">
+        <div class="tab active" onclick="showTab('home', this)">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M3 10.5L12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg>
+          <div>Home</div>
+        </div>
+        <div class="tab" onclick="showTab('cv', this)">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M6 2h9l5 5v15a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/></svg>
+          <div>CV</div>
+        </div>
+        <div class="tab" onclick="showTab('contact', this)">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M2 5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2z"/></svg>
+          <div>Contact</div>
+        </div>
+      </div>
+
+  <script>
+    function showTab(id, el) {
+      document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    function toggleTheme() {
+      const screen = document.querySelector('.screen');
+      screen.classList.toggle('dark');
+    }
+
+    function showCompany(id, el) {
+      document.querySelectorAll('.company-content').forEach(c => c.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+
+      document.querySelectorAll('.company').forEach(b => b.classList.remove('active'));
+      el.classList.add('active');
+    }
+  </script>
+</body>
+</html>
